@@ -77,22 +77,22 @@ void matching(char *brackets, int length)
 }
 
 
-int main()
-{
-	/**
-	 *  sizeof和strlen在获取字符串长度时有区别：
-	 *  sizeof获取时实际长度，strlen获取的是从开始到'\0'结束符的长度，有可能获取不准确
-	 *	如果是字符串定义的字符数组，会自动在最后一位添加'\0', 用sizeof获取时要减一才是实
-	 *	际支付长度
-	 */
-	char chars[] = "(([]([()]))([(])))";
-//	char chars[6] = {'a', 'c', '0', 'z', '3','d'};
-//	cout << sizeof(chars);
-//	cout << strlen(chars);
-	// 已遍历字符串
-	matching(chars, strlen(chars));
-	return 0;
-}
+//int main()
+//{
+//	/**
+//	 *  sizeof和strlen在获取字符串长度时有区别：
+//	 *  sizeof获取时实际长度，strlen获取的是从开始到'\0'结束符的长度，有可能获取不准确
+//	 *	如果是字符串定义的字符数组，会自动在最后一位添加'\0', 用sizeof获取时要减一才是实
+//	 *	际支付长度
+//	 */
+//	char chars[] = "(([]([()]))([(])))";
+////	char chars[6] = {'a', 'c', '0', 'z', '3','d'};
+////	cout << sizeof(chars);
+////	cout << strlen(chars);
+//	// 已遍历字符串
+//	matching(chars, strlen(chars));
+//	return 0;
+//}
 
 
 
