@@ -98,7 +98,7 @@ template<class T>
 bool SeqStack<T>::enStack(T element)
 {
 	// 打印进栈的对象内存地址
-	cout << "临时变量内存地址:" << &element << endl;
+//	cout << "临时变量内存地址:" << &element << endl;
 	// 栈满
 	if(m_iLength >= m_iCapacity){
 		return false;
@@ -106,7 +106,7 @@ bool SeqStack<T>::enStack(T element)
 
 	m_pStack[m_iLength] = element;
 	// 栈中的内存地址
-	cout << "栈中的内存地址:" << &m_pStack[m_iLength] << endl;
+//	cout << "栈中的内存地址:" << &m_pStack[m_iLength] << endl;
 	m_iLength++;
 	return true;
 }
