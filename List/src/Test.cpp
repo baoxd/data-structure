@@ -6,38 +6,38 @@
 // Description : Hello World in C++, Ansi-style
 //============================================================================
 
-#include <iostream>
-using namespace std;
-#include "List.h"
-#include "Person.h"
-
-
-bool compareInt(int n, int m)
-{
-	return n == m ;
-}
-
-void visitInt(int n)
-{
-	cout << n;
-}
-
-bool comparePerson(Person p1, Person p2)
-{
-	if(p1.getAge() == p2.getAge() && p1.getName() == p2.getName())
-	{
-		return true;
-	}
-	else
-	{
-		return false;
-	}
-}
-
-void visitPerson(Person p)
-{
-	cout << "姓名:" << p.getName() << " 年龄:" << p.getAge() << endl;
-}
+//#include <iostream>
+//using namespace std;
+//#include "List.h"
+//#include "Person.h"
+//
+//
+//bool compareInt(int n, int m)
+//{
+//	return n == m ;
+//}
+//
+//void visitInt(int n)
+//{
+//	cout << n;
+//}
+//
+//bool comparePerson(Person p1, Person p2)
+//{
+//	if(p1.getAge() == p2.getAge() && p1.getName() == p2.getName())
+//	{
+//		return true;
+//	}
+//	else
+//	{
+//		return false;
+//	}
+//}
+//
+//void visitPerson(Person p)
+//{
+//	cout << "姓名:" << p.getName() << " 年龄:" << p.getAge() << endl;
+//}
 
 //int main() {
 //	cout << "***********线性表-顺序表-整形***********"<< endl;
