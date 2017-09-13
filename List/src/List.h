@@ -20,7 +20,7 @@ using namespace std;
 template<class T>
 class List{
 public:
-	List(int size, bool (*compare)(T, T), void (*toString)(T));
+	List(int size, bool (*compare)(T, T) = NULL, void (*toString)(T) = NULL);
 	virtual ~List();
 	// Çå¿ÕÁ´±í
 	void clearList();
