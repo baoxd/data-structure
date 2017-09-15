@@ -12,7 +12,7 @@
 template<class T>
 class Tree{
 public:
-	Tree(Node<T> *node, void (*toString)(T) = NULL);
+	Tree(Node<T> *node = NULL, void (*toString)(T) = NULL);
 	~Tree();
 	// 清空二叉树
 	void clear();
@@ -44,6 +44,8 @@ public:
 	void inOrderTraverse();
 	// 后序遍历
 	void postOrderTraverse();
+	// 设置树根节点
+	void setRoot(Node<T> *root);
 
 private:
 	// 头结点
@@ -62,6 +64,16 @@ Tree<T>::Tree(Node<T> *node, void (*toString)(T))
 		m_pRoot->m_iIndex = node->m_iIndex;
 	}
 	m_pToString = toString;
+}
+
+template<class T>
+void Tree<T>::setRoot(Node<T> *root)
+{
+	m_pRoot->m_data = root->m_data;
+	m_pRoot->m_iIndex = root->m_iIndex;
+	m_pRoot->m_pLChild = root->m_pLChild;
+	m_pRoot->m_pParent = NULL;
+	m_pRoot->m_pRChild = root->m_pRChild;
 }
 
 template<class T>
@@ -150,6 +162,9 @@ bool Tree<T>::getRoot(Node<T> *node)
 	}
 	node->m_data = m_pRoot->m_data;
 	node->m_iIndex = m_pRoot->m_iIndex;
+	node->m_pLChild = m_pRoot->m_pLChild;
+	node->m_pRChild = m_pRoot->m_pRChild;
+	node->m_pParent = m_pRoot->m_pParent;
 	return true;
 }
 

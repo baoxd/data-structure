@@ -8,6 +8,7 @@
 #ifndef NODE_H_
 #define NODE_H_
 #include <iostream>
+using namespace std;
 
 template<class T>
 class Node{
@@ -95,6 +96,11 @@ template<class T>
 void Node<T>::preOrderTraverse(void(*toString)(T))
 {
 	toString(this->m_data);
+	if(this->m_pParent)
+	{
+		cout << "¸¸½Úµã:" << this->m_pParent->m_iIndex ;
+	}
+	cout << endl;
 	if(this->m_pLChild != NULL)
 	{
 		this->m_pLChild->preOrderTraverse(toString);

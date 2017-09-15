@@ -92,8 +92,8 @@ void testChar()
 }
 
 
-int main() {
-	// ²âÊÔ×Ö·û´®
-	testChar();
-	return 0;
-}
+//int main() {
+//	// ²âÊÔ×Ö·û´®
+//	testChar();
+//	return 0;
+//}
