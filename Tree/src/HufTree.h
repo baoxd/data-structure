@@ -93,7 +93,11 @@ void HufTree::createHufTree()
 
 void HufTree::createTree(Node<Code> *node)
 {
-	// 树旧根节点
+	/**
+	 *  这里新创建一个对象，但是孩子节点指向的还是原来的地址，而不是oldRoot这个新地址
+	 *  导致了根的孩子节点的m_pParent指向丢失。因此需要在getLeaf(获取叶子节点)中重新建立
+	 *  m_pParent指向
+	 */
 	Node<Code> *oldRoot = new Node<Code>;
 	m_pTree->getRoot(oldRoot);
 	// 树新节点
@@ -122,7 +126,7 @@ void HufTree::getLeaf(Node<Code> *node)
 		}
 		if(node->m_pRChild)
 		{
-			node->m_pLChild->m_pParent = node;
+			node->m_pRChild->m_pParent = node;
 			getLeaf(node->m_pRChild);
 		}
 	}
@@ -141,7 +145,7 @@ void HufTree::createHufCode()
 
 	for(int i = 0 ; i < m_iLength ; i++)
 	{
-		cout << leafNodes[i]->m_data.m_cData << endl;
+		cout << leafNodes[i]->m_data.m_cData << "的霍夫曼编码："<< endl;
 		getNodeSeqs(leafNodes[i]);
 	}
 }
@@ -163,18 +167,18 @@ void HufTree::getNodeSeqs(Node<Code> *node)
 		{
 			tmp[num++] = '1';
 		}
-		cout << "=====" << endl;
 		tmpNode = tmpNode->m_pParent;
 	}
 	num = 0;
 	for(int i = m_iLength - 1 ; i >=0  ; i--)
 	{
-		if(tmp[i] != '\0')
+		if(tmp[i] == '0' || tmp[i] == '1')
 		{
-			cout << "==" << tmp[i];
+			cout << tmp[i];
 			seqs[num] = tmp[i];
 		}
 	}
+	cout << endl;
 	node->m_data.m_pSeq = seqs;
 }
 
