@@ -37,6 +37,8 @@ public:
 	void breadthFirstTraversalImpl(vector<int> preVec);
 	// 最小生成树--普利姆算法
 	void prim(int nodeIndex);
+	// 最小生成树--克鲁斯卡尔算法
+	void kruskal();
 private:
 	// 图中节点个数
 	int m_iCapacity;
@@ -46,6 +48,10 @@ private:
 	Node *m_pNodeArray;
 	// 保存邻接矩阵
 	int *m_pMatrix;
+	// 找出最小边
+	int getMinEdge(vector<Edge> edgeVec, vector<vector<int>> nodeSets);
+	// 获取点集合索引
+	void getNodeInSetIndex(vector<vector<int>> nodeSets, Edge edge, int &indexA,int &indexB);
 };
 
 CMap::CMap(int capacity)
@@ -289,6 +295,169 @@ void CMap::prim(int nodeIndex)
 		cout << m_pNodeArray[selecedEdge[i].m_iNodeIndexA].m_cData << "-->"
 			 << m_pNodeArray[selecedEdge[i].m_iNodeIndexB].m_cData
 			 << " 权值:" << selecedEdge[i].m_iWeightValue << endl;
+	}
+}
+
+void CMap::kruskal()
+{
+	int value = 0;
+	int edgeCount = 0;
+	// 定义存在已选顶点集合的数组，每个集合构成一个连通分量
+	vector<vector<int>> nodeSets;
+	// 获取所有边
+	vector<Edge> edgeVec;
+	// 已选边
+	Edge selectEdge[m_iCapacity-1];
+
+	for(int i = 0 ; i < m_iCapacity; i++)
+	{
+		for(int j = i ; j < m_iCapacity; j++)
+		{
+			getValueFromMatrix(i, j, value);
+			if(value != 0)
+			{
+				Edge edge(i,j,value);
+				edgeVec.push_back(edge);
+			}
+		}
+	}
+	while(edgeCount < m_iCapacity - 1)
+	{
+		// 从边集合取出最小边
+		int minEdgeIndex = getMinEdge(edgeVec, nodeSets);
+		// 最小边的顶点
+		int nodeIndexA = edgeVec[minEdgeIndex].m_iNodeIndexA;
+		int nodeIndexB = edgeVec[minEdgeIndex].m_iNodeIndexB;
+		// 顶点在集合中的索引
+		int nodeAInSetIndex = -1, nodeBInSetIndex = -1;
+		getNodeInSetIndex(nodeSets,edgeVec[minEdgeIndex],nodeAInSetIndex, nodeBInSetIndex);
+
+		// 顶点都不在集合中
+		if(nodeAInSetIndex == -1 && nodeBInSetIndex == -1)
+		{
+			vector<int> nodeVec;
+			nodeVec.push_back(nodeIndexA);
+			nodeVec.push_back(nodeIndexB);
+			nodeSets.push_back(nodeVec);
+		}
+		else if(nodeAInSetIndex == -1 && nodeBInSetIndex !=-1)
+		{
+			nodeSets[nodeBInSetIndex].push_back(nodeIndexA);
+		}
+		else if(nodeAInSetIndex !=-1 && nodeBInSetIndex == -1)
+		{
+			nodeSets[nodeAInSetIndex].push_back(nodeIndexB);
+		}
+		// 合并连通分量
+		else if(nodeAInSetIndex !=-1 && nodeBInSetIndex !=-1 && nodeAInSetIndex != nodeBInSetIndex)
+		{
+			for(int k = 0 ; k<(int)nodeSets[nodeBInSetIndex].size();k++)
+			{
+				nodeSets[nodeAInSetIndex].push_back(nodeSets[nodeBInSetIndex][k]);
+			}
+			// 清除B集合
+			if(nodeBInSetIndex == (int)nodeSets.size()-1)
+			{
+				vector<int> tmp;
+				nodeSets[nodeBInSetIndex] =tmp;
+			}
+			else
+			{
+				// 清除B集合
+				for(int k = nodeBInSetIndex; k < (int)nodeSets.size() - 1; k++)
+				{
+					nodeSets[k] = nodeSets[k+1];
+				}
+			}
+		}
+		// 形成回路
+		else if(nodeAInSetIndex !=-1 && nodeBInSetIndex !=-1 && nodeAInSetIndex == nodeBInSetIndex)
+		{
+			continue;
+		}
+		// 保存已选边集合
+		selectEdge[edgeCount++] = edgeVec[minEdgeIndex];
+		edgeVec[minEdgeIndex].m_bSelected = true;
+	}
+
+	// 输出最小生成树路径
+	for(int i = 0 ; i<m_iCapacity-1;i++)
+	{
+		Edge edge = selectEdge[i];
+		int nodeIndexA = edge.m_iNodeIndexA;
+		int nodeIndexB = edge.m_iNodeIndexB;
+		int weight = edge.m_iWeightValue;
+		cout << m_pNodeArray[nodeIndexA].m_cData << "->" << m_pNodeArray[nodeIndexB].m_cData << "  权值:" << weight << endl;
+	}
+}
+
+int CMap::getMinEdge(vector<Edge> edgeVec, vector<vector<int>> nodeSets)
+{
+	int weight = 0, index = -1, i = 0;
+
+	for(; i <(int)edgeVec.size(); i++)
+	{
+		int indexA = -1, indexB = -1;
+		getNodeInSetIndex(nodeSets, edgeVec[i], indexA, indexB);
+		if(indexA !=-1 && indexB !=-1 && indexA == indexB)
+		{
+			continue;
+		}
+		if(!edgeVec[i].m_bSelected)
+		{
+			weight = edgeVec[i].m_iWeightValue;
+			index = i;
+			break;
+		}
+	}
+	// 没有查询到
+	if(weight == 0)
+	{
+		return index;
+	}
+	for(;i<(int)edgeVec.size();i++)
+	{
+		// 判断边的两点的关系
+		int indexA = -1, indexB = -1;
+		getNodeInSetIndex(nodeSets, edgeVec[i], indexA, indexB);
+		if(indexA !=-1 && indexB !=-1 && indexA == indexB)
+		{
+			continue;
+		}
+
+		if(edgeVec[i].m_iWeightValue < weight && !edgeVec[i].m_bSelected)
+		{
+			{
+				weight = edgeVec[i].m_iWeightValue;
+				index = i;
+			}
+		}
+	}
+	return index;
+}
+
+void CMap::getNodeInSetIndex(vector<vector<int>> nodeSets, Edge edge, int &indexA,int &indexB)
+{
+	// 判断边的两点的关系
+	int nodeIndexA = edge.m_iNodeIndexA;
+	int nodeIndexB = edge.m_iNodeIndexB;
+	// 顶点在集合中的索引
+	vector<int> nodeVec;
+	for(int j = 0;j<(int)nodeSets.size();j++)
+	{
+		nodeVec = nodeSets[j];
+		for(int k = 0 ; k<(int)nodeVec.size();k++)
+		{
+
+			if(nodeVec[k] == nodeIndexA)
+			{
+				indexA = j;
+			}
+			if(nodeVec[k] == nodeIndexB)
+			{
+				indexB = j;
+			}
+		}
 	}
 }
 
