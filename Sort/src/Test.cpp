@@ -16,7 +16,8 @@ int main() {
 	Sort sort;
     // øÏÀŸ≈≈–Ú
 	int a[] = {57, 68, 59, 52, 72, 28, 96, 33, 24};
-	sort.Quicksort(a, 0, sizeof(a) / sizeof(a[0]) - 1);
+//	sort.Quicksort(a, 0, sizeof(a) / sizeof(a[0]) - 1);
+	sort.HeapSort(a, (int) sizeof(a) / sizeof(*a));
 
 	int i = 0;
 	for(i = 0; i < (int)sizeof(a) / sizeof(a[0]); i++)
