@@ -10,11 +10,19 @@
 
 class Sort{
 public:
-	// 快速排序
+	// 插入排序 -- 直接插入
+	void InsertionSort(int a[], int len);
+	// 插入排序 -- 希尔排序
+	void ShellSort(int a[], int len);
+	// 交换排序 -- 冒泡排序
+	void BubbleSort(int a[], int len);
+	// 交换排序 -- 快速排序
 	void Quicksort(int a[], int low, int high);
 	// 堆排序 -- 创建最大堆
 	void MaxHeapify(int *array, int size, int element);
-	// 堆排序
+	// 选择排序 -- 简单选择排序
+	void SelectionSort(int a[], int len);
+	// 选择排序 -- 堆排序
 	void HeapSort(int *array, int size);
 };
 
