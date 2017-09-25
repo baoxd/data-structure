@@ -156,6 +156,48 @@ void Sort::HeapSort(int *array, int size)
 	}
 }
 
+void Sort::merge(int a[], int start, int mid, int end, int result[])
+{
+	int i,j,k;
+	i = start;
+	j = mid + 1;
+	k = 0;
+	while(i<=mid && j<=end)
+	{
+		if(a[i]<a[j])
+		{
+			result[k++] = a[i++];
+		}
+		else
+		{
+			result[k++] = a[j++];
+		}
+	}
+	while(i <= mid)
+	{
+		result[k++] = a[i++];
+	}
+	while(j <= end)
+	{
+		result[k++] = a[j++];
+	}
+	for(int i = 0;i<k;i++)
+	{
+		a[start+i] = result[i];
+	}
+}
+
+void Sort::MergeSort(int a[], int start, int end, int result[])
+{
+	if(start < end)
+	{
+		int mid = (start + end) / 2;
+		MergeSort(a, start, mid, result);
+		MergeSort(a, mid+1, end, result);
+		merge(a,start,mid,end,result);
+	}
+}
+
 
 
 

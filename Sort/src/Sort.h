@@ -24,6 +24,9 @@ public:
 	void SelectionSort(int a[], int len);
 	// —°‘Ò≈≈–Ú -- ∂—≈≈–Ú
 	void HeapSort(int *array, int size);
+	// πÈ≤¢≈≈–Ú
+	void merge(int a[], int start, int mid, int end, int result[]);
+	void MergeSort(int a[], int start, int end, int result[]);
 };
 
 

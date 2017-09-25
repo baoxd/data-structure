@@ -16,6 +16,7 @@ int main() {
 	Sort sort;
     // ©ЛкыеепР
 	int a[] = {57, 68, 59, 52, 72, 28, 96, 33, 24};
+	int tmp[] = {57, 68, 59, 52, 72, 28, 96, 33, 24};
 	int len =sizeof(a) / sizeof(a[0]);
 //	// ©ЛкыеепР
 //	sort.Quicksort(a, 0, len - 1);
@@ -27,8 +28,10 @@ int main() {
 //	sort.SelectionSort(a, len);
 //	// ц╟ещеепР
 //	sort.BubbleSort(a, len);
-	// оё╤ШеепР
-	sort.ShellSort(a, len);
+//	// оё╤ШеепР
+//	sort.ShellSort(a, len);
+	// ╧И╡╒еепР
+	sort.MergeSort(a,0,len-1,tmp);
 
 	int i = 0;
 	for(i = 0; i < (int)sizeof(a) / sizeof(a[0]); i++)
