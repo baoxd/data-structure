@@ -78,7 +78,7 @@ void Node<T>::deleteNode()
 	{
 		this->m_pRChild->deleteNode();
 	}
-	if(this->m_pRChild)
+	if(this->m_pParent)
 	{
 		if(this->m_pParent->m_pLChild == this)
 		{
